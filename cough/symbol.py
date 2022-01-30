@@ -69,7 +69,8 @@ def mktype(base, comp):
 
 
 class SymbolRecord:
-    record_struct = struct.Struct('<8sLhHBB')
+    record_struct_simple = struct.Struct('<8sLhHBB')
+    record_struct_string = struct.Struct('<LLLhHBB')
 
     def __init__(self, name, typ=None, section_number=SpecialSectionNumber.UNDEFINED, storage_class=StorageClass.NULL):
         self.name = name
@@ -79,15 +80,27 @@ class SymbolRecord:
         self.storage_class = storage_class
         self.aux_records = []
 
-    def pack(self):
+    def pack(self, strings_table):
         packed_aux_records = b''.join(self.aux_records)
         if len(packed_aux_records) % 18 != 0:
             raise ValueError('auxiliary records length must be a multiple of 18')
-        return self.record_struct.pack(
-            self.name,
-            self.value,
-            self.section_number,
-            self.type,
-            self.storage_class,
-            len(self.aux_records)
-        ) + packed_aux_records
+
+        if len(self.name) <= 8:
+            return self.record_struct_simple.pack(
+                self.name,
+                self.value,
+                self.section_number,
+                self.type,
+                self.storage_class,
+                len(self.aux_records)
+            ) + packed_aux_records
+        else:
+            return self.record_struct_string.pack(
+                0,
+                bytes(strings_table).index(self.name),
+                self.value,
+                self.section_number,
+                self.type,
+                self.storage_class,
+                len(self.aux_records)
+            ) + packed_aux_records

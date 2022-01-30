@@ -9,7 +9,7 @@ class StringTable:
     Size is in bytes and contains the 4 bytes required to write it.
     """
     def __init__(self):
-        self._strings = []
+        self._strings = bytearray()
 
     @staticmethod
     def _check(value):
@@ -19,28 +19,21 @@ class StringTable:
     def __len__(self):
         return len(self._strings)
 
-    def __getitem__(self, item):
-        return self._strings[item]
-
-    def __setitem__(self, key, value):
-        self._check(value)
-        self._strings[key] = value
-
     def __contains__(self, item):
         return item in self._strings
 
-    def __iter__(self):
-        return iter(self._strings)
-
     def append(self, item):
         self._check(item)
-        self._strings.append(item)
+
+        if not self.__contains__(item + b'\0'):
+            self._strings += item + b'\0'
 
     def pack(self):
-        sizeof_strtab_size = 4
-        total_size_in_bytes = sizeof_strtab_size + sum(len(s) + 1 for s in self._strings)
+        sizeof_strtab_size  = 4
+        total_size_in_bytes = sizeof_strtab_size + len(self._strings)
+
         buffer = bytearray()
         buffer += total_size_in_bytes.to_bytes(sizeof_strtab_size, 'little', signed=False)
-        for s in self._strings:
-            buffer += s + b'\0'
+        buffer += self._strings
+
         return bytes(buffer)

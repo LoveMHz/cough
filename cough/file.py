@@ -119,9 +119,19 @@ class ObjectModule:
         body_buffer = bytearray()
         body_buffer += self.file_header.pack()
         body_buffer += sections_buffer
+
+        # Add symbol strings to the string table
         for sym in self.symbols:
-            body_buffer += sym.pack()
-        body_buffer += self.string_table.pack()
+            if(len(sym.name) > 8):
+                self.string_table.append(sym.name)
+
+        # Build string table so we can point symbol names to it later
+        string_table = self.string_table.pack()
+
+        for sym in self.symbols:
+            body_buffer += sym.pack(string_table)
+
+        body_buffer += string_table
         return bytes(body_buffer)
 
     def dump_sections(self):
