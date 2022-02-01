@@ -55,5 +55,6 @@ __all__ = [
     'mktype',
     'Section',
     'StringTable',
-    'Relocation'
+    'Relocation',
+    'RelocationType'
 ]

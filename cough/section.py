@@ -1,6 +1,9 @@
 import enum
 import struct
 
+class RelocationType(enum.IntFlag):
+    ADDR32 = 6, # 32-bit absolute address
+    REL32  = 20 # 32-bit PC-relative address
 
 class Relocation:
     """
