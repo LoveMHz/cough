@@ -97,7 +97,7 @@ class SymbolRecord:
         else:
             return self.record_struct_string.pack(
                 0,
-                bytes(strings_table).index(self.name),
+                bytes(strings_table).index(self.name + b'\0'),
                 self.value,
                 self.section_number,
                 self.type,

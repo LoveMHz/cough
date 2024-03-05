@@ -20,7 +20,7 @@ class StringTable:
         return len(self._strings)
 
     def __contains__(self, item):
-        return item in self._strings
+        return (item + b'\0') in self._strings
 
     def append(self, item):
         self._check(item)
