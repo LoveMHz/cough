@@ -40,6 +40,7 @@ __author__ = 'David D. Dorfman'
 from .file import *
 from .section import *
 from .symbol import *
+from .symbol_aux import *
 
 
 __all__ = [
@@ -52,6 +53,8 @@ __all__ = [
     'ComplexType',
     'BaseType',
     'SymbolRecord',
+    'SymbolAuxRecordSectionDefinition',
+    'SymbolAuxRecordWeakExternal',
     'mktype',
     'Section',
     'StringTable',
