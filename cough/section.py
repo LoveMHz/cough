@@ -150,7 +150,7 @@ class Section:
             self.pointer_to_raw_data,
             self.pointer_to_relocations,
             self.pointer_to_linenumbers,
-            self.number_of_relocations,
+            len(self.relocations),
             self.number_of_linenumbers,
             self.flags
         )
