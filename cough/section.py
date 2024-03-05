@@ -28,10 +28,10 @@ class Relocation:
     """
     struct = struct.Struct('<LLH')
 
-    def __init__(self):
-        self.virtual_address = 0
-        self.symbol_table_index = 0
-        self.type = 0
+    def __init__(self, virtual_address = 0, symbol_table_index = 0, type = 0):
+        self.virtual_address    = virtual_address
+        self.symbol_table_index = symbol_table_index
+        self.type               = type
 
     def pack(self):
         return self.struct.pack(
