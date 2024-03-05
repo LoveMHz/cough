@@ -113,7 +113,11 @@ class ObjectModule:
         sections_buffer = self.dump_sections()
         self.file_header.time_date_stamp = int(time.time())
         self.file_header.number_of_sections = len(self.sections)
+
+        # Calculate the number of symbols including aux records
         self.file_header.number_of_symbols = len(self.symbols)
+        for symbol in self.symbols:
+            self.file_header.number_of_symbols += len(symbol.aux_records)
 
         self.file_header.pointer_to_symtab = FileHeader.struct.size + len(sections_buffer)
         body_buffer = bytearray()
