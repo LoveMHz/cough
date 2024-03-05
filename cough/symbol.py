@@ -88,7 +88,7 @@ class SymbolRecord:
         if len(self.name) <= 8:
             return self.record_struct_simple.pack(
                 self.name,
-                self.value,
+                self.value or 0,
                 self.section_number,
                 self.type,
                 self.storage_class,
@@ -98,7 +98,7 @@ class SymbolRecord:
             return self.record_struct_string.pack(
                 0,
                 bytes(strings_table).index(self.name + b'\0'),
-                self.value,
+                self.value or 0,
                 self.section_number,
                 self.type,
                 self.storage_class,
