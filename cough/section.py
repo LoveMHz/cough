@@ -1,6 +1,7 @@
 import enum
 import struct
 
+# Ref: https://learn.microsoft.com/en-us/windows/win32/debug/pe-format#intel-386-processors
 class RelocationType(enum.IntFlag):
     ADDR32 = 6, # 32-bit absolute address
     REL32  = 20 # 32-bit PC-relative address
