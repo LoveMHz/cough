@@ -53,6 +53,7 @@ __all__ = [
     'ComplexType',
     'BaseType',
     'SymbolRecord',
+    'ComdatType',
     'SymbolAuxRecordSectionDefinition',
     'SymbolAuxRecordWeakExternal',
     'mktype',
