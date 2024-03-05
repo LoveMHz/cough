@@ -65,7 +65,7 @@ class ComplexType(enum.IntEnum):
 
 
 def mktype(base, comp):
-    return (comp << 8) + base
+    return (comp << 4) + base
 
 
 class SymbolRecord:
